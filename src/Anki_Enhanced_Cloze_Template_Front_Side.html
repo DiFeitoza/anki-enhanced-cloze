@@ -1,0 +1,321 @@
+<div id="front-card">
+    <div id="main-section">
+        <div id="main-and-info" class="content">
+            {{#domain}}
+            <div id="domain">@ {{domain}}</div>
+            {{/domain}}
+
+            <!-- 分割线 -->
+            {{#Topic}}
+            <div id="topic"># {{Topic}}</div>
+            {{/Topic}}
+            <br>
+
+            <!-- 分割线 -->
+            <div id="main">
+                {{cloze:Cloze99}}
+                <!-- 分割线 -->
+                {{cloze:Cloze1}}
+                <!-- 分割线 -->
+                {{cloze:Cloze2}}
+                <!-- 分割线 -->
+                {{cloze:Cloze3}}
+                <!-- 分割线 -->
+                {{cloze:Cloze4}}
+                <!-- 分割线 -->
+                {{cloze:Cloze5}}
+                <!-- 分割线 -->
+                {{cloze:Cloze6}}
+                <!-- 分割线 -->
+                {{cloze:Cloze7}}
+                <!-- 分割线 -->
+                {{cloze:Cloze8}}
+                <!-- 分割线 -->
+                {{cloze:Cloze9}}
+                <!-- 分割线 -->
+                {{cloze:Cloze10}}
+                <!-- 分割线 -->
+                {{cloze:Cloze11}}
+                <!-- 分割线 -->
+                {{cloze:Cloze12}}
+                <!-- 分割线 -->
+                {{cloze:Cloze13}}
+                <!-- 分割线 -->
+                {{cloze:Cloze14}}
+                <!-- 分割线 -->
+                {{cloze:Cloze15}}
+                <!-- 分割线 -->
+                {{cloze:Cloze16}}
+                <!-- 分割线 -->
+                {{cloze:Cloze17}}
+                <!-- 分割线 -->
+                {{cloze:Cloze18}}
+                <!-- 分割线 -->
+                {{cloze:Cloze19}}
+                <!-- 分割线 -->
+                {{cloze:Cloze20}}
+            </div>
+        </div>
+        <br>
+
+        <div id="main-header" class="header left-border-red text-color-red" style="display:block" onclick="showNextElement(this)">
+            <b>信息</b>
+        </div>
+        
+        <div id="main-detail" class="header left-border-red text-color-red" style="display:none">
+            <div>牌组：
+                <b>{{Deck}}</b>
+            </div>
+
+            <!-- 分割线 -->
+            {{#Project}}
+            <div>项目：
+                <b>{{Project}}</b>
+            </div>
+            {{/Project}}
+
+            <!-- 分割线  -->
+            {{#Tags}}
+            <div id="tags">标签：
+                <b>{{Tags}}</b>
+            </div>
+            {{/Tags}}
+
+            <!-- 分割线  -->
+            {{#Subject}}
+            <div>主题：
+                <b>{{Subject}}</b>
+            </div>
+            {{/Subject}}
+        </div>
+    </div>
+</div>
+
+<script src="_jquery-3.2.1.min.js"></script>
+
+<script>
+    var pseudoClozeHintArr = [],
+        pseudoClozeAnswerArr = [];
+
+    $(function () {
+        $('#front-card').each(function (index, ele) {
+            if ($('#card-cloze-id').text() != 'c99') {
+                setPseudoCloze(ele);
+                changeHint(ele);
+            }
+
+            setQuote(ele);
+            setUrl(ele);
+            setHidden(ele);
+            shortenTag(ele);
+
+            if ($('#card-cloze-id').text() != 'c99') {
+                // showClozeInMiddleOfView('#front-first-cloze');
+            }
+        });
+    });
+
+    function showClozeInMiddleOfView(idSelector) {
+        ele = $(idSelector);
+        location.hash = idSelector;
+        $(window).scrollTop($(window).scrollTop() - 0.2 * $(window).height());
+    };
+
+
+    function shortenTag(ele) {
+        $(ele).find('#tags kbd').each(function (index, ele) {
+            $(ele).text(function (index, text) {
+                return text.replace(/[^:]+::/g, "");
+            });
+        });
+    };
+
+    function toggleCloze(ele, isRealCloze, displayOption) {
+        var relevantAnswerArr, relevantHintArr;
+        if (isRealCloze) {
+            relevantAnswerArr = answerArr;
+            relevantHintArr = hintArr;
+        } else {
+            relevantAnswerArr = pseudoClozeAnswerArr;
+            relevantHintArr = pseudoClozeHintArr;
+        };
+        var answer = relevantAnswerArr[$(ele).attr('index')];
+        var hint = relevantHintArr[$(ele).attr('index')]
+
+        if (displayOption == 'answer') {
+            $(ele).attr('show-state', 'answer');
+            $(ele).html(answer);
+        } else if (displayOption == 'hint') {
+            $(ele).attr('show-state', 'hint');
+            $(ele).html(hint);
+        } else if (displayOption == 'toggle') {
+            if ($(ele).attr('show-state') == 'hint') {
+                $(ele).attr('show-state', 'answer');
+                $(ele).html(answer);
+            } else {
+                $(ele).attr('show-state', 'hint');
+                $(ele).html(hint);
+            };
+        };
+    };
+
+    // TODO: use python to pre-deal with these data
+    function setPseudoCloze(ele) {
+        $(ele).html(function (index, oldhtml) {
+            return oldhtml.replace(/\[\[c\d+?::([\s\S]+?)\]\]/g,
+                function (clozeOriHtml) {
+                    var indexOfAnswer = clozeOriHtml.indexOf('::') + 2;
+                    var indexofHint = clozeOriHtml.lastIndexOf('::') + 2;
+                    var clozeId = clozeOriHtml.substring(2, indexOfAnswer - 2);
+                    var lengthOfClozeOriHtml = clozeOriHtml.length;
+                    var answer, hint;
+                    if (indexOfAnswer == indexofHint) {
+                        answer = clozeOriHtml.substring(indexOfAnswer, lengthOfClozeOriHtml - 2);
+                        // if (answer == '$$') {
+                        //     hint = '&nbsp;&nbsp;[&nbsp;&nbsp;' + clozeId +
+                        //         '&nbsp;&nbsp;占位&nbsp;&nbsp;]&nbsp;&nbsp;'
+                        // } else {
+                        hint = '&nbsp;&nbsp;[&nbsp;&nbsp;' + clozeId + '&nbsp;&nbsp;]&nbsp;&nbsp;'
+                        // }
+                    } else {
+                        answer = clozeOriHtml.substring(indexOfAnswer, indexofHint - 2);
+                        hint = '&nbsp;&nbsp;[&nbsp;&nbsp;' + clozeId + '&nbsp;&nbsp;' + clozeOriHtml.substring(
+                            indexofHint, lengthOfClozeOriHtml - 2) + '&nbsp;&nbsp;]&nbsp;&nbsp;';
+                    }
+                    var index = pseudoClozeAnswerArr.push(answer) - 1;
+                    pseudoClozeHintArr.push(hint) - 1;
+                    var clozeNewHtml =
+                        '<span class="pseudo-cloze" index="_index_" show-state="hint" cloze-id="_cloze-id_" onclick="toggleCloze(this, false, \'toggle\')">_content_</span>';
+                    clozeNewHtml = clozeNewHtml.replace(/_index_/g, index).replace(/_content_/g, hint).replace(
+                        /_cloze-id_/g, clozeId);
+                    return clozeNewHtml;
+                }
+            )
+        })
+    };
+
+    function changeHint(ele) {
+        var $clozeEles = $(ele).find('.cloze');
+        var $firstClozeEle = $clozeEles.first();
+        $firstClozeEle.html($firstClozeEle.html().replace('[', '<span id="front-first-cloze">&nbsp;&nbsp;[&nbsp;&nbsp;')
+            .replace(']', '&nbsp;&nbsp;]&nbsp;&nbsp;</span>'));
+        var $otherClozeEles = $clozeEles.slice(1);
+        $otherClozeEles.each(function (index, elem) {
+            $(elem).html($(elem).html().replace('[', '&nbsp;&nbsp;[&nbsp;&nbsp;')
+                .replace(']', '&nbsp;&nbsp;]&nbsp;&nbsp;'))
+        })
+
+        // $(ele).html(function (index, oldhtml) {
+        //     oldhtml = oldhtml.replace(/\[\.\.\.\]/, '<span id="front-first-cloze">&nbsp;&nbsp;[' + new Array(10)
+        //         .join('&nbsp;') +
+        //         ']&nbsp;&nbsp;</span>');
+        //     return oldhtml.replace(/\[\.\.\.\]/g, '&nbsp;&nbsp;[' + new Array(10).join('&nbsp;') +
+        //         ']&nbsp;&nbsp;');
+        // });
+    };
+
+    // TODO:optimization
+    function setQuote(ele) {
+        $(ele).html(function (index, oldhtml) {
+            return oldhtml.replace(/('''[\s\S]*?(?:<\/div>)?<div>)([\s\S]*?)(<\/div><div>''')/g,
+                '$1' + '<div class="myQuote">' + '$2' + '</div>' + '$3');
+        });
+    };
+
+    // TODO: optimization
+    function setUrl(ele) {
+        $(ele).html(function (index, oldhtml) {
+            return oldhtml.replace(
+                /((https?|ftp|file):\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|])/g,
+                '<a href=' + '$1' + '>' + '$1' + '</a>');
+        });
+    };
+
+    // TODO: optimization
+    function setHidden(ele) {
+        $(ele).html(function (index, oldhtml) {
+            return oldhtml.replace(/(<div>--hide on--<\/div>)([\s\S]*?)(<div>--hide off--<\/div>)/g, '$1' +
+                '<div onclick="showNextElement(this)" style="color:#db3236">[点击切换]</div><div class="hidden-content" style="display:none">' +
+                '$2' + '</div>' + '$3');
+        })
+    };
+
+    function showNextElement(ele) {
+        showElement($(ele).next());
+    };
+
+    function showElement(ele) {
+        $(ele).show();
+    };
+</script>
+
+<!-- JS 函数 -->
+<!--
+        <script type="text/javascript">
+            // var answerArr = [],
+            //     hintArr = [];
+        
+            // [].forEach.call(document.querySelectorAll('#front-side #card'),
+            //     function (ele) {
+            //         changeHint(ele)
+            //         setQuote(ele);
+            //         setUrl(ele);
+            //     }
+            // );
+        
+            // function changeHint(ele) {
+            //     ele.innerHTML = ele.innerHTML.replace(/\[\.\.\.\]/g, '[' + new Array(10).join('&nbsp') + ']');
+            // };
+        
+            // function showContent(ele) {
+            //     ele.nextElementSibling.style.display = 'block';
+            // };
+        
+            // function setQuote(ele) {
+            //     ele.innerHTML = ele.innerHTML.replace(/('''[\s\S]*?<\/?div>)([\s\S]*?)(<div>''')/g, '$1' +
+            //         '<div class="myQuote">' + '$2' + '</div>' + '$3');
+            // };
+        
+            // function setUrl(ele) {
+            //     ele.innerHTML = ele.innerHTML.replace(
+            //         /((https?|ftp|file):\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|])/g,
+            //         '<a href=' + '$1' + '>' + '$1' + '</a>');
+            // };
+        
+            // function toggleCloze(ele) {
+            //     if (ele.getAttribute('show-state') == 'hint') {
+            //         ele.setAttribute('show-state', 'anwser');
+            //         ele.innerHTML = answerArr[ele.getAttribute('index')];
+            //         return;
+            //     } else {
+            //         ele.setAttribute('show-state', 'hint');
+            //         ele.innerHTML = hintArr[ele.getAttribute('index')];
+            //         return;
+            //     }
+            // };
+        
+            // function renderCloze(ele) {
+            //     ele.innerHTML = ele.innerHTML.replace(/\{\{c\d+?\:\:([\s\S]+?)\}\}/g,
+            //         function (clozeOriHtml) {
+            //             var indexOfAnswer = clozeOriHtml.indexOf('::') + 2;
+            //             var indexofHint = clozeOriHtml.indexOf(':::') + 3;
+            //             var lengthOfClozeOriHtml = clozeOriHtml.length;
+            //             var answer, hint;
+            //             if (indexofHint == -1 + 3) {
+            //                 answer = clozeOriHtml.substring(indexOfAnswer, lengthOfClozeOriHtml - 2);
+            //                 hint = new Array(10).join('&nbsp');
+            //             } else {
+            //                 answer = clozeOriHtml.substring(indexOfAnswer, indexofHint - 3);
+            //                 hint = clozeOriHtml.substring(indexofHint, lengthOfClozeOriHtml - 2);
+            //             }
+            //             var index = answerArr.push(answer) - 1;
+            //             hintArr.push(hint) - 1;
+            //             var clozeNewHtml =
+            //                 '<sp~an class="cloze" index="_index_" show-state="hint" onclick="toggleCloze(this)">_content_</span>';
+            //             clozeNewHtml = clozeNewHtml.replace('_index_', index).replace('_content_', hint);
+            //             return clozeNewHtml;
+            //         }
+            //     )
+            // };
+        </script>
+-->

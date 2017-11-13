@@ -1,0 +1,316 @@
+/* ------------ Font ------------ */
+
+@font-face {
+    font-family: 'font-main';
+    src: url('_方正兰亭黑.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'font-mono';
+    src: url('_Microsoft-Yahei-Mono.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'font-mono-mobile';
+    src: url('_SourceCodePro-Regular.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+/* ------------Style------------- */
+
+i {
+    padding: 0 0.5em 0 0;
+}
+
+u {
+    background-color: #ffeeee;
+    border-bottom: 1px solid #db3236;
+    text-decoration: none;
+}
+
+a {
+    color: #444444;
+    word-wrap: break-word;
+}
+
+.mobile ol,
+.mobile ul {
+    margin-left: -0.5em;
+}
+
+.mobile li {
+    margin-left: -0.5em;
+    margin-top: 0.2em;
+}
+
+table {
+    border-collapse: collapse;
+    margin: 0.5em;
+}
+
+thead tr,
+tfoot tr {
+    border-top: 2px solid #4885ed;
+    border-bottom: 2px solid #4885ed;
+}
+
+tbody tr {
+    border-top: 1px solid #4885ed;
+    border-bottom: 1px solid #4885ed;
+}
+
+td,
+th {
+    border: 1px solid #4885ed;
+    padding: 0.2em 0.5em;
+}
+
+td:first-child,
+th:first-child {
+    border-left: none;
+}
+td:last-child,
+th:last-child{
+    border-right: none;
+}
+
+hr {
+    color: #db3236;
+    size: 5px;
+}
+
+pre {
+    font-family: 'font-mono' !important;
+    border-left: 2px solid lightseagreen;
+    padding-left: 10px;
+}
+
+.mobile pre {
+    font-family: 'font-mono-mobile' !important;
+}
+
+code,
+kbd,
+var,
+samp,
+tt {
+    font-family: 'font-mono' !important;
+    background-color: #ddeeff;
+}
+
+.mobile code,
+.mobile kbd,
+.mobile var,
+.mobile samp,
+.mobile tt {
+    font-family: 'font-mono-mobile' !important;;
+}
+
+.header {
+    font: 16px/1.5em 'font-mono';
+    padding-left: 0.5em;
+}
+
+.mobile .header {
+    font: 16px/1.5em 'font-mono-mobile';
+}
+
+.content {
+    font: 16px/1.5em 'font-main';
+    padding-left: 0.5em;
+}
+
+.left-border-red {
+    border-left: 4px solid #db3236;
+}
+
+.left-border-green {
+    border-left: 4px solid #3cba54;
+}
+
+.left-border-blue {
+    border-left: 4px solid #4885ed;
+}
+
+.left-border-yellow {
+    border-left: 4px solid #f4c20d;
+}
+
+.text-color-red {
+    color: #db3236;
+}
+
+.text-color-green {
+    color: #3cba54;
+}
+
+.text-color-blue {
+    color: #4885ed;
+}
+
+.text-color-yellow {
+    color: #f4c20d;
+}
+
+#topic,
+#domain {
+    font-family: 'font-mono';
+    font-weight: bold;
+}
+
+.mobile #topic,
+.mobile #domain {
+    font-family: 'font-mono-mobile';
+}
+
+/* .win #back-card-body {
+    margin-top: 100px;
+} */
+#front-card {
+    margin-bottom: 300px;
+}
+
+ #back-card-body {
+    margin-bottom: 300px;
+}
+
+#toggleClozeButtonGroup {
+    z-index: 9999;
+    background-color: white;
+    position: fixed;
+    bottom: 10px;
+}
+
+/* .win #toggleClozeButtonGroup {
+    position: fixed;
+    top: 10px;
+} */
+
+/* #toggleClozeButtonGroup {
+    position: fixed;
+    bottom: 10px;
+} */
+
+.toggleClozeButton {
+    font-family: 'font-mono';
+    display: none;
+    background-color: white;
+    border: 2px solid #4885ed;
+    color: black;
+    text-align: center;
+    font-size: 14px;
+    border-radius: 5px;
+    height: 30px;
+    width: 45px;
+    margin: 5px;
+    opacity: 1;
+}
+
+.mobile .toggleClozeButton {
+    font-family: 'font-mono-mobile';
+}
+
+
+/* -- Power Format Addon style -- */
+
+/* .myCodeClass {
+    font-family: 'font-mono';
+    background-color: #ddeeff;
+    padding: 0 0.5em;
+}
+
+.mobile .myCodeClass {
+    font-family: 'font-mono-mobile';
+} */
+
+.myQuote {
+    border-left: 2px solid gray;
+    padding-left: 10px;
+}
+
+
+/* --------- Animation ---------- */
+
+.cloze {
+    /* color: navy; */
+    /* background-color: #ffeeee; */
+    border-bottom: 1px solid #db3236;
+    position: relative;
+    animation: cloze 0.5s 0s;
+    animation-fill-mode: forwards;
+    -webkit-animation: cloze 0.5s 0s;
+    -webkit-animation-fill-mode: forwards;
+}
+
+.pseudo-cloze {
+    /* color: navy; */
+    /* background-color: #ffeeee; */
+    border-bottom: 1px solid #4885ed;
+    position: relative;
+    animation: cloze 0.5s 0s;
+    animation-fill-mode: forwards;
+    -webkit-animation: cloze 0.5s 0s;
+    -webkit-animation-fill-mode: forwards;
+}
+
+.slide {
+    position: relative;
+    animation: slide 0.5s 0s;
+    animation-fill-mode: forwards;
+    -webkit-animation: slide 0.5s 0s;
+    -webkit-animation-fill-mode: forwards;
+}
+
+@keyframes cloze {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes cloze {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slide {
+    0% {
+        opacity: 0;
+        top: 100px;
+    }
+    50% {
+        opacity: 0.8;
+        top: -10px;
+    }
+    100% {
+        opacity: 1.0;
+        top: -3px;
+    }
+}
+
+@-webkit-keyframes slide {
+    0% {
+        opacity: 0;
+        top: 100px;
+    }
+    50% {
+        opacity: 0.8;
+        top: -10px;
+    }
+    100% {
+        opacity: 1.0;
+        top: -3px;
+    }
+}
