@@ -99,3 +99,7 @@ ENV/
 
 # mypy
 .mypy_cache/
+src/tempCodeRunnerFile.python
+src/.vscode
+src/_jquery-3.2.1.js
+src/_jquery.hotkeys.js

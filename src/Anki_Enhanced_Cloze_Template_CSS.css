@@ -25,12 +25,12 @@
 /* ------------Style------------- */
 
 i {
-    padding: 0 0.5em 0 0;
+    padding-right: 0.5em;
 }
 
 u {
     background-color: #ffeeee;
-    border-bottom: 1px solid #db3236;
+    border-bottom: 2px solid #0f9d58;
     text-decoration: none;
 }
 
@@ -46,7 +46,7 @@ a {
 
 .mobile li {
     margin-left: -0.5em;
-    margin-top: 0.2em;
+    margin: 0.1em, inherit;
 }
 
 table {
@@ -56,18 +56,16 @@ table {
 
 thead tr,
 tfoot tr {
-    border-top: 2px solid #4885ed;
-    border-bottom: 2px solid #4885ed;
+    border: 2px solid #4285f4, inherit;
 }
 
 tbody tr {
-    border-top: 1px solid #4885ed;
-    border-bottom: 1px solid #4885ed;
+    border: 1px solid #4285f4, inherit;
 }
 
 td,
 th {
-    border: 1px solid #4885ed;
+    border: 1px solid #4285f4;
     padding: 0.2em 0.5em;
 }
 
@@ -75,13 +73,14 @@ td:first-child,
 th:first-child {
     border-left: none;
 }
+
 td:last-child,
-th:last-child{
+th:last-child {
     border-right: none;
 }
 
 hr {
-    color: #db3236;
+    color: #db4437;
     size: 5px;
 }
 
@@ -109,7 +108,8 @@ tt {
 .mobile var,
 .mobile samp,
 .mobile tt {
-    font-family: 'font-mono-mobile' !important;;
+    font-family: 'font-mono-mobile' !important;
+    ;
 }
 
 .header {
@@ -124,38 +124,44 @@ tt {
 .content {
     font: 16px/1.5em 'font-main';
     padding-left: 0.5em;
+    border-left: 4px solid white;
+}
+
+.quote {
+    border-left: 2px solid gray;
+    padding-left: 10px;
 }
 
 .left-border-red {
-    border-left: 4px solid #db3236;
+    border-left: 4px solid #db4437;
 }
 
 .left-border-green {
-    border-left: 4px solid #3cba54;
+    border-left: 4px solid #0f9d58;
 }
 
 .left-border-blue {
-    border-left: 4px solid #4885ed;
+    border-left: 4px solid #4285f4;
 }
 
 .left-border-yellow {
-    border-left: 4px solid #f4c20d;
+    border-left: 4px solid #f4b400;
 }
 
 .text-color-red {
-    color: #db3236;
+    color: #db4437;
 }
 
 .text-color-green {
-    color: #3cba54;
+    color: #0f9d58;
 }
 
 .text-color-blue {
-    color: #4885ed;
+    color: #4285f4;
 }
 
 .text-color-yellow {
-    color: #f4c20d;
+    color: #f4b400;
 }
 
 #topic,
@@ -169,39 +175,24 @@ tt {
     font-family: 'font-mono-mobile';
 }
 
-/* .win #back-card-body {
-    margin-top: 100px;
-} */
-#front-card {
-    margin-bottom: 300px;
-}
-
- #back-card-body {
-    margin-bottom: 300px;
-}
-
-#toggleClozeButtonGroup {
+#domain-and-topic-section {
+    width: 100%;
     z-index: 9999;
     background-color: white;
     position: fixed;
-    bottom: 10px;
+    top: 0;
 }
 
-/* .win #toggleClozeButtonGroup {
-    position: fixed;
-    top: 10px;
-} */
+#card-body {
+    margin-top: 3em;
+}
 
-/* #toggleClozeButtonGroup {
-    position: fixed;
-    bottom: 10px;
-} */
 
-.toggleClozeButton {
+/* .btn {
     font-family: 'font-mono';
     display: none;
     background-color: white;
-    border: 2px solid #4885ed;
+    border: 2px solid #4285f4;
     color: black;
     text-align: center;
     font-size: 14px;
@@ -212,58 +203,38 @@ tt {
     opacity: 1;
 }
 
-.mobile .toggleClozeButton {
-    font-family: 'font-mono-mobile';
-}
-
-
-/* -- Power Format Addon style -- */
-
-/* .myCodeClass {
-    font-family: 'font-mono';
-    background-color: #ddeeff;
-    padding: 0 0.5em;
-}
-
-.mobile .myCodeClass {
+.mobile .btn {
     font-family: 'font-mono-mobile';
 } */
 
-.myQuote {
-    border-left: 2px solid gray;
-    padding-left: 10px;
-}
 
 
 /* --------- Animation ---------- */
 
-.cloze {
-    /* color: navy; */
-    /* background-color: #ffeeee; */
-    border-bottom: 1px solid #db3236;
+.genuine-cloze {
+    border-bottom: 2px solid #db4437;
     position: relative;
-    animation: cloze 0.5s 0s;
+    animation: cloze 1s 0s;
     animation-fill-mode: forwards;
-    -webkit-animation: cloze 0.5s 0s;
+    -webkit-animation: cloze 1s 0s;
     -webkit-animation-fill-mode: forwards;
 }
 
 .pseudo-cloze {
-    /* color: navy; */
-    /* background-color: #ffeeee; */
-    border-bottom: 1px solid #4885ed;
+    border-bottom: 2px solid #4285f4;
     position: relative;
-    animation: cloze 0.5s 0s;
+    animation: cloze 1s 0s;
     animation-fill-mode: forwards;
-    -webkit-animation: cloze 0.5s 0s;
+    -webkit-animation: cloze 1s 0s;
     -webkit-animation-fill-mode: forwards;
 }
 
-.slide {
+.hidden-block {
+    border-bottom: 2px solid #f4b400;
     position: relative;
-    animation: slide 0.5s 0s;
+    animation: cloze 1s 0s;
     animation-fill-mode: forwards;
-    -webkit-animation: slide 0.5s 0s;
+    -webkit-animation: cloze 1s 0s;
     -webkit-animation-fill-mode: forwards;
 }
 
@@ -282,35 +253,5 @@ tt {
     }
     to {
         opacity: 1;
-    }
-}
-
-@keyframes slide {
-    0% {
-        opacity: 0;
-        top: 100px;
-    }
-    50% {
-        opacity: 0.8;
-        top: -10px;
-    }
-    100% {
-        opacity: 1.0;
-        top: -3px;
-    }
-}
-
-@-webkit-keyframes slide {
-    0% {
-        opacity: 0;
-        top: 100px;
-    }
-    50% {
-        opacity: 0.8;
-        top: -10px;
-    }
-    100% {
-        opacity: 1.0;
-        top: -3px;
     }
 }
