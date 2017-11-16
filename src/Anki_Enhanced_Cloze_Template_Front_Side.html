@@ -162,8 +162,9 @@
 
     function scrollToFirstCloze() {
         $('.genuine-cloze').first().attr('id', 'first-genuine-cloze');
-        location.href = '#first-genuine-cloze'
-        $(window).scrollTop($(window).scrollTop() - 0.2 * $(window).height() - 35);
+        $('html, body').animate({
+            scrollTop: $("#first-genuine-cloze").offset().top - 150 
+        }, 200);
     }
 
     function showHiddenBlock(elem) {

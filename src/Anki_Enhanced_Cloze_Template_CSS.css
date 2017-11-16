@@ -208,33 +208,35 @@ tt {
 } */
 
 
-
 /* --------- Animation ---------- */
 
 .genuine-cloze {
-    border-bottom: 2px solid #db4437;
+    border-bottom: 1px solid #db4437;
+    padding-bottom: 1px;
     position: relative;
-    animation: cloze 1s 0s;
+    animation: cloze 0.5s 0s;
     animation-fill-mode: forwards;
-    -webkit-animation: cloze 1s 0s;
+    -webkit-animation: cloze 0.5s 0s;
     -webkit-animation-fill-mode: forwards;
 }
 
 .pseudo-cloze {
-    border-bottom: 2px solid #4285f4;
+    border-bottom: 1px solid #4285f4;
+    padding-bottom: 1px;
     position: relative;
-    animation: cloze 1s 0s;
+    animation: cloze 0.5s 0s;
     animation-fill-mode: forwards;
-    -webkit-animation: cloze 1s 0s;
+    -webkit-animation: cloze 0.5s 0s;
     -webkit-animation-fill-mode: forwards;
 }
 
 .hidden-block {
-    border-bottom: 2px solid #f4b400;
+    border-bottom: 1px solid #f4b400;
+    padding-bottom: 1px;
     position: relative;
-    animation: cloze 1s 0s;
+    animation: cloze 0.5s 0s;
     animation-fill-mode: forwards;
-    -webkit-animation: cloze 1s 0s;
+    -webkit-animation: cloze 0.5s 0s;
     -webkit-animation-fill-mode: forwards;
 }
 
