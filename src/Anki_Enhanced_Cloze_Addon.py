@@ -2,33 +2,15 @@
 
 import re
 
-from anki.hooks import addHook
 from aqt import mw
 from aqt.utils import showInfo
+from aqt.addcards import AddCards
+from aqt.browser import Browser
+from aqt.editcurrent import EditCurrent
+from aqt.utils import tooltip
+from anki.hooks import addHook, wrap
 
-
-def setup_url(html_text):
-    return re.sub(r"((https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|])", r'<a href="\1">\1</a>', html_text)
-
-
-def setup_quote(html_text):
-    return re.sub(r"('''[\s\S]*?(?:</div>?)\s*?)(<div>[\s\S]*?</div>)(\s*?<div>''')", r'\1<div class="quote">\2</div>\3', html_text)
-
-
-def process_hidden_block_content(matchObj):
-    global hidden_block_content_arr
-    hidden_block_content = str(matchObj.group(2))
-    hidden_block_content_arr.append(hidden_block_content)
-    index_in_arr = len(hidden_block_content_arr) - 1
-    wrapped_hidden_block_content = r'<span class="hidden-block" index="%s">%s</span>' % (
-        str(index_in_arr), hidden_block_content)
-    return str(matchObj.group(1)) + wrapped_hidden_block_content + str(matchObj.group(3))
-
-
-def setup_hidden_block(html_text):
-    return re.sub(r"(--hide on--[\s\S]*?<div>)([\s\S]*?)(</div>\s*?<div>--hide off--</div>)", process_hidden_block_content, html_text)
-
-
+# global variables
 genuine_answer_arr = []
 genuine_hint_arr = []
 pseudo_answer_arr = []
@@ -37,76 +19,18 @@ current_cloze_field_number = 0
 
 hidden_block_content_arr = []
 
-
-def process_cloze(matchObj):
-
-    cloze_string = str(matchObj.group())  # like: {{c1::aa[::bbb]}}
-    index_of_answer = cloze_string.find("::") + 2
-    index_of_hint = cloze_string.rfind("::") + 2
-    cloze_id = cloze_string[2: index_of_answer - 2]  # like: c1
-    cloze_length = len(cloze_string)
-
-    answer = ""
-    hint = ""
-    if (index_of_answer == index_of_hint):
-        answer = cloze_string[index_of_answer: cloze_length - 2]
-        hint = ""
-    else:
-        answer = cloze_string[index_of_answer: index_of_hint - 2]
-        hint = cloze_string[index_of_hint: cloze_length - 2]
-
-    global current_cloze_field_number
-    if (cloze_id != 'c' + str(current_cloze_field_number)):
-        # Process pseudo-cloze
-        global pseudo_answer_arr
-        global pseudo_hint_arr
-        pseudo_answer_arr.append(answer)
-        pseudo_hint_arr.append(hint)
-        index_in_arr = len(pseudo_answer_arr) - 1
-        new_html = '<span class="pseudo-cloze" index="_index_" show-state="hint" cloze-id="_cloze-id_">_content_</span>'
-        new_html = new_html.replace('_index_', str(index_in_arr)).replace(
-            '_cloze-id_', str(cloze_id)).replace('_content_', cloze_string.replace("{", '[').replace("}", "]"))
-        return new_html
-    else:
-        # Process genuine-cloze
-        global genuine_answer_arr
-        global genuine_hint_arr
-        genuine_answer_arr.append(answer)
-        genuine_hint_arr.append(hint)
-        index_in_arr = len(genuine_answer_arr) - 1
-        new_html = '<span class="genuine-cloze" index="_index_" show-state="hint" cloze-id="_cloze-id_">_content_</span>'
-        new_html = new_html.replace('_index_', str(index_in_arr)).replace(
-            '_cloze-id_', str(cloze_id)).replace('_content_', str(cloze_string))
-        return new_html
+# constants
+MODEL_NAME = "0 Enhanced Cloze"
+CONTENT_FIELD_NAME = "# Content"
+VALID_CLOZES_FIELD_NAME = "Valid Clozes"
 
 
-def onFocusLost(flag, n, fidx):
+def generate_enhanced_cloze(note):
     # cloze_id like c1, cloze_number like 1
 
-    TEMPLATE_NAME = "0 Enhanced Cloze"
-    CONTENT_FIELD_NAME = "# Content"
-    VALID_CLOZES_FIELD_NAME = "Valid Clozes"
-
-    # Check template
-    if TEMPLATE_NAME != n.model()['name']:
-        return flag
-
-    # Ensure focus lost from the content field
-    src_field_name = None
-    src_field_index = None
-
-    for index, name in enumerate(mw.col.models.fieldNames(n.model())):
-        if CONTENT_FIELD_NAME == name:
-            src_field_name = name
-            src_field_index = index
-            break
-    if not src_field_name:
-        return flag
-    if src_field_index != fidx:
-        return flag
-
     # Some specific pre-processing of content
-    src_field_content = n[src_field_name]
+    src_field_name = CONTENT_FIELD_NAME
+    src_field_content = note[src_field_name]
     src_field_content = setup_url(src_field_content)
     src_field_content = setup_quote(src_field_content)
     global hidden_block_content_arr
@@ -121,20 +45,20 @@ def onFocusLost(flag, n, fidx):
     if not cloze_start_matches:
         for i_cloze_field_number in range(1, 20 + 1):
             dest_field_name = "Cloze%s" % i_cloze_field_number
-            n[dest_field_name] = ""
+            note[dest_field_name] = ""
 
-        n[VALID_CLOZES_FIELD_NAME] = ""
+        note[VALID_CLOZES_FIELD_NAME] = ""
 
-        n["Cloze99"] = src_field_content + \
+        note["Cloze99"] = src_field_content + \
             '<div style="display:none">{{c99::@@}}</div>' + \
             '<div id="card-cloze-id" style="display:none">c99</div>'
         return True
     else:
-        n["Cloze99"] = ""
+        note["Cloze99"] = ""
 
         valid_cloze_numbers = sorted(
             [int(re.sub(r"\D", "", x)) for x in set(cloze_start_matches)])
-        n[VALID_CLOZES_FIELD_NAME] = str(valid_cloze_numbers)
+        note[VALID_CLOZES_FIELD_NAME] = str(valid_cloze_numbers)
 
         # Fill in content in valid cloze fields and empty content in invalid fields
         global current_cloze_field_number
@@ -187,9 +111,130 @@ def onFocusLost(flag, n, fidx):
                 dest_field_content += '<div id="card-cloze-id" style="display:none">c%s</div>' % str(
                     current_cloze_field_number)
 
-            n[dest_field_name] = dest_field_content
-
+            note[dest_field_name] = dest_field_content
         return True
 
 
-addHook('editFocusLost', onFocusLost)
+def check_model(model):
+    return model["name"] == MODEL_NAME
+
+
+def setup_url(html_text):
+    return re.sub(r"((https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|])", r'<a href="\1">\1</a>', html_text)
+
+
+def setup_quote(html_text):
+    return re.sub(r"('''[\s\S]*?(?:</div>?)\s*?)(<div>[\s\S]*?</div>)(\s*?<div>''')", r'\1<div class="quote">\2</div>\3', html_text)
+
+
+def setup_hidden_block(html_text):
+    return re.sub(r"(--hide on--[\s\S]*?<div>)([\s\S]*?)(</div>\s*?<div>+--hide off--)", process_hidden_block_content, html_text)
+
+
+def process_hidden_block_content(matchObj):
+    global hidden_block_content_arr
+    hidden_block_content = str(matchObj.group(2))
+    hidden_block_content_arr.append(hidden_block_content)
+    index_in_arr = len(hidden_block_content_arr) - 1
+    wrapped_hidden_block_content = r'<span class="hidden-block" index="%s">%s</span>' % (
+        str(index_in_arr), hidden_block_content)
+    return str(matchObj.group(1)) + wrapped_hidden_block_content + str(matchObj.group(3))
+
+
+def process_cloze(matchObj):
+
+    cloze_string = str(matchObj.group())  # like: {{c1::aa[::bbb]}}
+    index_of_answer = cloze_string.find("::") + 2
+    index_of_hint = cloze_string.rfind("::") + 2
+    cloze_id = cloze_string[2: index_of_answer - 2]  # like: c1
+    cloze_length = len(cloze_string)
+
+    answer = ""
+    hint = ""
+    if (index_of_answer == index_of_hint):
+        answer = cloze_string[index_of_answer: cloze_length - 2]
+        hint = ""
+    else:
+        answer = cloze_string[index_of_answer: index_of_hint - 2]
+        hint = cloze_string[index_of_hint: cloze_length - 2]
+
+    global current_cloze_field_number
+    if (cloze_id != 'c' + str(current_cloze_field_number)):
+        # Process pseudo-cloze
+        global pseudo_answer_arr
+        global pseudo_hint_arr
+        pseudo_answer_arr.append(answer)
+        pseudo_hint_arr.append(hint)
+        index_in_arr = len(pseudo_answer_arr) - 1
+        new_html = '<span class="pseudo-cloze" index="_index_" show-state="hint" cloze-id="_cloze-id_">_content_</span>'
+        new_html = new_html.replace('_index_', str(index_in_arr)).replace(
+            '_cloze-id_', str(cloze_id)).replace('_content_', cloze_string.replace("{", '[').replace("}", "]"))
+        return new_html
+    else:
+        # Process genuine-cloze
+        global genuine_answer_arr
+        global genuine_hint_arr
+        genuine_answer_arr.append(answer)
+        genuine_hint_arr.append(hint)
+        index_in_arr = len(genuine_answer_arr) - 1
+        new_html = '<span class="genuine-cloze" index="_index_" show-state="hint" cloze-id="_cloze-id_">_content_</span>'
+        new_html = new_html.replace('_index_', str(index_in_arr)).replace(
+            '_cloze-id_', str(cloze_id)).replace('_content_', str(cloze_string))
+        return new_html
+
+
+def on_add_cards(self, _old):
+    note = self.editor.note
+    if not note or not check_model(note.model()):
+        return _old(self)
+    generate_enhanced_cloze(note)
+    ret = _old(self)
+    # tooltip('Enhanced Cloze Added')
+    return ret
+
+
+def on_edit_current(self, _old):
+    note = self.editor.note
+    if not note or not check_model(note.model()):
+        return _old(self)
+    generate_enhanced_cloze(note)
+    ret = _old(self)
+    # tooltip('Enhanced Cloze Updated')
+    return ret
+
+
+def update_all_enhanced_clozes(self, evt=None):
+    browser = self
+    mw = browser.mw
+    nids = mw.col.findNotes("tag:*")
+    mw.checkpoint("Update Enhanced Clozes")
+    mw.progress.start()
+    browser.model.beginReset()
+    for nid in nids:
+        note = mw.col.getNote(nid)
+        if not check_model(note.model()):
+            break
+        generate_enhanced_cloze(note)
+        note.flush()
+    browser.model.endReset()
+    mw.requireReset()
+    mw.progress.finish()
+    mw.reset()
+    # tooltip('Enhanced Clozes Updated.')
+
+
+def setup_menu(self):
+    browser = self
+    menu = browser.form.menuEdit
+    menu.addSeparator()
+    a = menu.addAction('Update Enhanced Clozes')
+    a.triggered.connect(lambda _, b=browser: update_all_enhanced_clozes(b))
+
+
+AddCards.addCards = wrap(AddCards.addCards, on_add_cards, "around")
+EditCurrent.onSave = wrap(EditCurrent.onSave, on_edit_current, "around")
+Browser.closeEvent = wrap(
+    Browser.closeEvent, update_all_enhanced_clozes, "before")
+addHook("browser.setupMenus", setup_menu)  # see Batch Edit add-on
+
+# addHook('editFocusLost', onFocusLost)
