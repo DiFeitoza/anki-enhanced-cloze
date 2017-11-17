@@ -8,6 +8,8 @@
         {{#Topic}}
         <div id="topic"># {{Topic}}</div>
         {{/Topic}}
+
+        <div id="no-more-clozes-message" style="display:none; color:#db4437">! No More Clozes</div>
     </div>
 
     <div id="main-section" class="content">
@@ -120,6 +122,7 @@
 
 <script>
     var indexOfGenuineClozeToShow = 0;
+    var genuineClozeTotalNumber = $('.genuine-cloze').length;
 
     $(function () {
         // initialize genuine clozes
@@ -144,7 +147,11 @@
 
         // setup key binding
         $(document).bind('keyup', 'i', function () {
-            showOneCloze();
+            if (indexOfGenuineClozeToShow >= genuineClozeTotalNumber) {
+                $('#no-more-clozes-message').show();
+            } else {
+                showOneCloze();
+            }
         })
 
         // setup hidden block click event
@@ -163,7 +170,7 @@
     function scrollToFirstCloze() {
         $('.genuine-cloze').first().attr('id', 'first-genuine-cloze');
         $('html, body').animate({
-            scrollTop: $("#first-genuine-cloze").offset().top - 150 
+            scrollTop: $("#first-genuine-cloze").offset().top - 150
         }, 200);
     }
 

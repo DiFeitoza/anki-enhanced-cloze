@@ -230,7 +230,7 @@ def update_all_enhanced_cloze(self):
             break
         generate_enhanced_cloze(note)
         note.flush()
-    # tooltip('Enhanced Clozes Updated.')
+    tooltip('Enhanced Clozes Updated.')
 
 
 # def setup_menu(self):
@@ -245,10 +245,13 @@ def on_save_now(self, callback=None):
 
 
 AddCards.addCards = wrap(AddCards.addCards, on_add_cards, "around")
-# EditCurrent.onSave = wrap(EditCurrent.onSave, on_edit_current, "around")
+
+EditCurrent.onSave = wrap(EditCurrent.onSave, on_edit_current, "around")
 # Browser.closeEvent = wrap(
 #     Browser.closeEvent, update_all_enhanced_clozes_in_browser, "before")
+
 Editor.saveNow = wrap(Editor.saveNow, on_save_now, "before")
+
 # addHook("browser.setupMenus", setup_menu)  # see Batch Edit add-on
 
 # addHook('editFocusLost', onFocusLost)

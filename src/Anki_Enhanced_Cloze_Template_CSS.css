@@ -100,7 +100,7 @@ var,
 samp,
 tt {
     font-family: 'font-mono' !important;
-    background-color: #ddeeff;
+    background-color: #e8f8ff;
 }
 
 .mobile code,
@@ -164,18 +164,12 @@ tt {
     color: #f4b400;
 }
 
-#topic,
-#domain {
-    font-family: 'font-mono';
-    font-weight: bold;
-}
 
-.mobile #topic,
-.mobile #domain {
-    font-family: 'font-mono-mobile';
-}
 
 #domain-and-topic-section {
+    font-family: 'font-mono';
+    font-weight: bold;
+    color: #db4437;
     width: 100%;
     z-index: 9999;
     background-color: white;
@@ -183,8 +177,12 @@ tt {
     top: 0;
 }
 
+.mobile #domain-and-topic-section{
+    font-family: 'font-mono-mobile'
+}
+
 #card-body {
-    margin-top: 3em;
+    margin-top: 4.5em;
 }
 
 
@@ -220,6 +218,11 @@ tt {
     -webkit-animation-fill-mode: forwards;
 }
 
+.genuine-cloze[show-state="hint"] {
+    border-bottom: 2px solid #db4437;
+    background-color: #fff3c2;
+}
+
 .pseudo-cloze {
     border-bottom: 1px solid #4285f4;
     padding-bottom: 1px;
@@ -228,6 +231,11 @@ tt {
     animation-fill-mode: forwards;
     -webkit-animation: cloze 0.5s 0s;
     -webkit-animation-fill-mode: forwards;
+}
+
+.pseudo-cloze[show-state="hint"] {
+    border-bottom: 2px solid #4285f4;
+    background-color: #fff3c2;
 }
 
 .hidden-block {
