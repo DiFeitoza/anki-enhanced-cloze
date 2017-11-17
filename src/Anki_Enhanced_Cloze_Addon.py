@@ -10,6 +10,7 @@ from aqt.editcurrent import EditCurrent
 from aqt.utils import tooltip
 from anki.hooks import addHook, wrap
 from aqt.editor import Editor
+from aqt.qt import *
 
 # global variables
 genuine_answer_arr = []
@@ -204,21 +205,21 @@ def on_edit_current(self, _old):
     return ret
 
 
-# def update_all_enhanced_clozes_in_browser(self, evt=None):
-#     browser = self
-#     mw = browser.mw
+def update_all_enhanced_clozes_in_browser(self, evt=None):
+    browser = self
+    mw = browser.mw
 
-#     mw.checkpoint("Update Enhanced Clozes")
-#     mw.progress.start()
-#     browser.model.beginReset()
+    mw.checkpoint("Update Enhanced Clozes")
+    mw.progress.start()
+    browser.model.beginReset()
 
-#     update_all_enhanced_cloze(self)
+    update_all_enhanced_cloze(self)
 
-#     browser.model.endReset()
-#     mw.requireReset()
-#     mw.progress.finish()
-#     mw.reset()
-#     # tooltip('Enhanced Clozes Updated.')
+    browser.model.endReset()
+    mw.requireReset()
+    mw.progress.finish()
+    mw.reset()
+    # tooltip('Enhanced Clozes Updated.')
 
 
 def update_all_enhanced_cloze(self):
@@ -230,15 +231,16 @@ def update_all_enhanced_cloze(self):
             break
         generate_enhanced_cloze(note)
         note.flush()
-    tooltip('Enhanced Clozes Updated.')
+    # tooltip('Enhanced Clozes Updated.')
 
 
-# def setup_menu(self):
-#     browser = self
-#     menu = browser.form.menuEdit
-#     menu.addSeparator()
-#     a = menu.addAction('Update Enhanced Clozes')
-#     a.triggered.connect(lambda _, b=browser: update_all_enhanced_clozes_in_browser(b))
+def setup_menu(self):
+    browser = self
+    menu = browser.form.menuEdit
+    menu.addSeparator()
+    a = menu.addAction('Update Enhanced Clozes')
+    a.setShortcut(QKeySequence("Ctrl+Shift+C"))
+    a.triggered.connect(lambda _, b=browser: update_all_enhanced_clozes_in_browser(b))
 
 def on_save_now(self, callback=None):
     update_all_enhanced_cloze(self)
@@ -252,6 +254,6 @@ EditCurrent.onSave = wrap(EditCurrent.onSave, on_edit_current, "around")
 
 Editor.saveNow = wrap(Editor.saveNow, on_save_now, "before")
 
-# addHook("browser.setupMenus", setup_menu)  # see Batch Edit add-on
+addHook("browser.setupMenus", setup_menu)  # see Batch Edit add-on
 
 # addHook('editFocusLost', onFocusLost)

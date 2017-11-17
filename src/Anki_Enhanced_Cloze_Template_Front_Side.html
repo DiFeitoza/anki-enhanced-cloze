@@ -9,7 +9,6 @@
         <div id="topic"># {{Topic}}</div>
         {{/Topic}}
 
-        <div id="no-more-clozes-message" style="display:none; color:#db4437">! No More Clozes</div>
     </div>
 
     <div id="main-section" class="content">
@@ -115,6 +114,8 @@
         </div>
     </div>
     <br> {{/Extra}}
+
+    <div id="popup">No More</div>
 </div>
 
 <script src="_jquery-3.2.1.js"></script>
@@ -148,7 +149,9 @@
         // setup key binding
         $(document).bind('keyup', 'i', function () {
             if (indexOfGenuineClozeToShow >= genuineClozeTotalNumber) {
-                $('#no-more-clozes-message').show();
+                $('#popup').animate({
+                    display: "toggle",
+                }, 600);
             } else {
                 showOneCloze();
             }

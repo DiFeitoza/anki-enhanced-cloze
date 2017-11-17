@@ -164,8 +164,6 @@ tt {
     color: #f4b400;
 }
 
-
-
 #domain-and-topic-section {
     font-family: 'font-mono';
     font-weight: bold;
@@ -177,12 +175,29 @@ tt {
     top: 0;
 }
 
-.mobile #domain-and-topic-section{
+.mobile #domain-and-topic-section {
     font-family: 'font-mono-mobile'
 }
 
 #card-body {
     margin-top: 4.5em;
+}
+
+#popup {
+    position: fixed;
+    font-family: "font-mono";
+    left: 10%;
+    top: 50%;
+    height: 1.2em;
+    padding: 0.6em;
+    text-align: center;
+    margin-top: -0.9em;
+    font-size: 1.5rem;
+    color: black;
+    background-color: white;
+    border: 2px solid #db4437;
+    border-radius: 1em;
+    display: none;
 }
 
 
