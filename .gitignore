@@ -106,3 +106,5 @@ src/_jquery.hotkeys.js
 
 src/anki
 src/aqt
+src/_jquery-3.2.1.min.js
+src/_Autolinker.min.js

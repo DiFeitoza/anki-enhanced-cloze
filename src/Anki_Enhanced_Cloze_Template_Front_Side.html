@@ -118,8 +118,9 @@
     <div id="popup">No More</div>
 </div>
 
-<script src="_jquery-3.2.1.js"></script>
+<script src="_jquery-3.2.1.min.js"></script>
 <script src="_jquery.hotkeys.js"></script>
+<script src="_Autolinker.min.js"></script>
 
 <script>
     var indexOfGenuineClozeToShow = 0;
@@ -166,6 +167,16 @@
         $('.genuine-cloze, .pseudo-cloze').click(function () {
             toggleCloze($(this), 'toggle');
         })
+
+        var cardBodyElem = document.getElementById('card-body')
+        cardBodyElem.innerHTML = Autolinker.link(cardBodyElem.innerHTML, {
+            phone: false,
+            truncate: {
+                length: 100,
+                location: 'smart'
+            },
+            stripPrefix: false,
+        });
 
         scrollToFirstCloze();
     });

@@ -33,7 +33,7 @@ def generate_enhanced_cloze(note):
     # Some specific pre-processing of content
     src_field_name = CONTENT_FIELD_NAME
     src_field_content = note[src_field_name]
-    src_field_content = setup_url(src_field_content)
+    # src_field_content = setup_url(src_field_content)
     src_field_content = setup_quote(src_field_content)
     global hidden_block_content_arr
     del hidden_block_content_arr[:]
@@ -121,8 +121,8 @@ def check_model(model):
     return model["name"] == MODEL_NAME
 
 
-def setup_url(html_text):
-    return re.sub(r"((https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|])", r'<a href="\1">\1</a>', html_text)
+# def setup_url(html_text):
+#     return re.sub(r"(?<![\"\'])(https?|ftp)://(-\.)?([^\s/?\.#-]+\.?)+(/[^\s]*)?(?![\"\'])", r'<a href="\1">\1</a>', html_text)
 
 
 def setup_quote(html_text):
@@ -240,7 +240,9 @@ def setup_menu(self):
     menu.addSeparator()
     a = menu.addAction('Update Enhanced Clozes')
     a.setShortcut(QKeySequence("Ctrl+Shift+C"))
-    a.triggered.connect(lambda _, b=browser: update_all_enhanced_clozes_in_browser(b))
+    a.triggered.connect(
+        lambda _, b=browser: update_all_enhanced_clozes_in_browser(b))
+
 
 def on_save_now(self, callback=None):
     update_all_enhanced_cloze(self)
