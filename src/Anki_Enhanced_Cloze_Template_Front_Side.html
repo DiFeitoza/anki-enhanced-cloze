@@ -116,6 +116,7 @@
     <br> {{/Extra}}
 
     <div id="popup">No More</div>
+    <button id="btn-show-one-cloze">Next</button>
 </div>
 
 <script src="_jquery-3.2.1.min.js"></script>
@@ -147,18 +148,6 @@
             $(elem).text($(elem).text().replace(/[^:\s]+::/g, ''));
         });
 
-        // setup key binding
-        $(document).bind('keyup', 'i', function () {
-            if (indexOfGenuineClozeToShow >= genuineClozeTotalNumber) {
-                $('#popup').animate({
-                    display: "toggle",
-                }, 600);
-            } else {
-                showOneCloze();
-            }
-        })
-
-
         var cardBodyElem = document.getElementById('card-body')
         cardBodyElem.innerHTML = Autolinker.link(cardBodyElem.innerHTML, {
             phone: false,
@@ -171,6 +160,11 @@
 
         scrollToFirstCloze();
 
+        // setup key binding
+        $(document).bind('keyup', 'i', function () {
+            showOneCloze();
+        })
+
         // setup hidden block click event
         $('.hidden-block').click(function () {
             showHiddenBlock(this);
@@ -179,6 +173,10 @@
         // setup cloze click event
         $('.genuine-cloze, .pseudo-cloze').click(function () {
             toggleCloze($(this), 'toggle');
+        })
+
+        $('#btn-show-one-cloze').click(function () {
+            showOneCloze();
         })
     });
 
@@ -211,9 +209,16 @@
     }
 
     function showOneCloze() {
-        $('.genuine-cloze[index=' + (indexOfGenuineClozeToShow++) + ']').each(function (index, elem) {
-            toggleCloze(elem, 'answer')
-        })
+        if (indexOfGenuineClozeToShow >= genuineClozeTotalNumber) {
+            $('#popup').animate({
+                display: "toggle",
+            }, 600);
+        } else {
+            $('.genuine-cloze[index=' + (indexOfGenuineClozeToShow++) + ']').each(function (index, elem) {
+                toggleCloze(elem, 'answer')
+            })
+        }
+
     }
 
     function toggleCloze(elem, displayOption) {

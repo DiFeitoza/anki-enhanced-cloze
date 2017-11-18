@@ -200,25 +200,24 @@ tt {
     display: none;
 }
 
-
-/* .btn {
-    font-family: 'font-mono';
-    display: none;
+#btn-show-one-cloze {
+    font-family: 'font-mono-mobile';
+    position: fixed;
+    bottom: 1em;
+    left: 50%;
+    height: 40px;
+    width: 50px;
+    margin-left: -25px;
     background-color: white;
     border: 2px solid #4285f4;
     color: black;
     text-align: center;
     font-size: 14px;
     border-radius: 5px;
-    height: 30px;
-    width: 45px;
-    margin: 5px;
-    opacity: 1;
 }
 
-.mobile .btn {
-    font-family: 'font-mono-mobile';
-} */
+
+
 
 
 /* --------- Animation ---------- */
