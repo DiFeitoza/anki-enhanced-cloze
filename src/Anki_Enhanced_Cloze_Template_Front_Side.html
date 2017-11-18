@@ -115,8 +115,9 @@
     </div>
     <br> {{/Extra}}
 
-    <div id="popup">No More</div>
-    <button id="btn-show-one-cloze">Next</button>
+    <div id="show-one-cloze-left"></div>
+    <div id="show-one-cloze-right"></div>
+    <div id="no-more-cloze"></div>
 </div>
 
 <script src="_jquery-3.2.1.min.js"></script>
@@ -175,7 +176,7 @@
             toggleCloze($(this), 'toggle');
         })
 
-        $('#btn-show-one-cloze').click(function () {
+        $('#show-one-cloze-left,#show-one-cloze-right').click(function () {
             showOneCloze();
         })
     });
@@ -210,9 +211,9 @@
 
     function showOneCloze() {
         if (indexOfGenuineClozeToShow >= genuineClozeTotalNumber) {
-            $('#popup').animate({
+            $('#no-more-cloze').animate({
                 display: "toggle",
-            }, 600);
+            }, 500);
         } else {
             $('.genuine-cloze[index=' + (indexOfGenuineClozeToShow++) + ']').each(function (index, elem) {
                 toggleCloze(elem, 'answer')

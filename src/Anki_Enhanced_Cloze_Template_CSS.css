@@ -183,41 +183,31 @@ tt {
     margin-top: 4.5em;
 }
 
-#popup {
+#show-one-cloze-left,
+#show-one-cloze-right,
+#no-more-cloze {
+    height: 100%;
+    width: 40px;
     position: fixed;
-    font-family: "font-mono";
-    left: 10%;
-    top: 50%;
-    height: 1.2em;
-    padding: 0.6em;
-    text-align: center;
-    margin-top: -0.9em;
-    font-size: 1.5rem;
-    color: black;
-    background-color: white;
-    border: 2px solid #db4437;
-    border-radius: 1em;
+    z-index: 9999;
+    top: 0%;
+    background-color: transparent;
+}
+
+#show-one-cloze-left {
+    left: 0;
+}
+
+#show-one-cloze-right {
+    right: 0;
+}
+
+#no-more-cloze {
+    width: 10px;
+    background-color: #db4437;
+    left: 0;
     display: none;
 }
-
-#btn-show-one-cloze {
-    font-family: 'font-mono-mobile';
-    position: fixed;
-    bottom: 1em;
-    left: 50%;
-    height: 40px;
-    width: 50px;
-    margin-left: -25px;
-    background-color: white;
-    border: 2px solid #4285f4;
-    color: black;
-    text-align: center;
-    font-size: 14px;
-    border-radius: 5px;
-}
-
-
-
 
 
 /* --------- Animation ---------- */
