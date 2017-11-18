@@ -158,15 +158,6 @@
             }
         })
 
-        // setup hidden block click event
-        $('.hidden-block').click(function () {
-            showHiddenBlock(this);
-        })
-
-        // setup cloze click event
-        $('.genuine-cloze, .pseudo-cloze').click(function () {
-            toggleCloze($(this), 'toggle');
-        })
 
         var cardBodyElem = document.getElementById('card-body')
         cardBodyElem.innerHTML = Autolinker.link(cardBodyElem.innerHTML, {
@@ -179,6 +170,16 @@
         });
 
         scrollToFirstCloze();
+
+        // setup hidden block click event
+        $('.hidden-block').click(function () {
+            showHiddenBlock(this);
+        })
+
+        // setup cloze click event
+        $('.genuine-cloze, .pseudo-cloze').click(function () {
+            toggleCloze($(this), 'toggle');
+        })
     });
 
     function scrollToFirstCloze() {
