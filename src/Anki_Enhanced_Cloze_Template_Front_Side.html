@@ -123,6 +123,7 @@
 <script src="_jquery-3.2.1.min.js"></script>
 <script src="_jquery.hotkeys.js"></script>
 <script src="_Autolinker.min.js"></script>
+<script src="_jquery.visible.min.js"></script>
 
 <script>
     var indexOfGenuineClozeToShow = 0;
@@ -182,10 +183,27 @@
     });
 
     function scrollToFirstCloze() {
-        $('.genuine-cloze').first().attr('id', 'first-genuine-cloze');
-        $('html, body').animate({
-            scrollTop: $("#first-genuine-cloze").offset().top - 150
-        }, 200);
+        scrollToCloze($('.genuine-cloze').first(), true);
+    }
+
+    function scrollToCloze($elem, isFirst) {
+        if (isFirst) {
+            $('html, body').animate({
+                scrollTop: $elem.offset().top - 200
+            }, 100);
+        } else if (!$elem.visible()) {
+            $('html, body').animate({
+                scrollTop: $elem.offset().top - 200
+            }, 100);
+
+            // var windowScrollTop = $(window).scrollTop();
+            // var elemOffsetTop = $elem.offset().top;
+            // if ((elemOffsetTop - windowScrollTop) < 300) {
+            //     $('html, body').animate({
+            //         scrollTop: $(window).scrollTop - 300,
+            //     }, 100);
+            // }
+        }
     }
 
     function showHiddenBlock(elem) {
@@ -216,10 +234,12 @@
             }, 500);
         } else {
             $('.genuine-cloze[index=' + (indexOfGenuineClozeToShow++) + ']').each(function (index, elem) {
-                toggleCloze(elem, 'answer')
+                toggleCloze(elem, 'answer');
+                scrollToCloze($(elem));
+                $(elem).css('display', 'none');
+                $(elem).show(500);
             })
         }
-
     }
 
     function toggleCloze(elem, displayOption) {

@@ -56,16 +56,13 @@ table {
 
 thead tr,
 tfoot tr {
-    border: 2px solid #4285f4, inherit;
-}
-
-tbody tr {
-    border: 1px solid #4285f4, inherit;
+    border-top: 2px solid #0f9d58;
+    border-bottom: 2px solid #0f9d58;
 }
 
 td,
 th {
-    border: 1px solid #4285f4;
+    border: 1px solid #0f9d58;
     padding: 0.2em 0.5em;
 }
 
@@ -210,46 +207,47 @@ tt {
 }
 
 
+
 /* --------- Animation ---------- */
 
 .genuine-cloze {
     border-bottom: 1px solid #db4437;
     padding-bottom: 1px;
     position: relative;
-    animation: cloze 0.5s 0s;
+    /* animation: cloze 0.5s 0s;
     animation-fill-mode: forwards;
     -webkit-animation: cloze 0.5s 0s;
-    -webkit-animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards; */
 }
 
 .genuine-cloze[show-state="hint"] {
     border-bottom: 2px solid #db4437;
-    background-color: #fff3c2;
+    background-color: #ffe1df;
 }
 
 .pseudo-cloze {
     border-bottom: 1px solid #4285f4;
     padding-bottom: 1px;
     position: relative;
-    animation: cloze 0.5s 0s;
+    /* animation: cloze 0.5s 0s;
     animation-fill-mode: forwards;
     -webkit-animation: cloze 0.5s 0s;
-    -webkit-animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards; */
 }
 
 .pseudo-cloze[show-state="hint"] {
     border-bottom: 2px solid #4285f4;
-    background-color: #fff3c2;
+    background-color: #dce8ff;
 }
 
 .hidden-block {
     border-bottom: 1px solid #f4b400;
     padding-bottom: 1px;
     position: relative;
-    animation: cloze 0.5s 0s;
+    /* animation: cloze 0.5s 0s;
     animation-fill-mode: forwards;
     -webkit-animation: cloze 0.5s 0s;
-    -webkit-animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards; */
 }
 
 @keyframes cloze {
