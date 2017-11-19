@@ -101,10 +101,6 @@ ENV/
 .mypy_cache/
 src/tempCodeRunnerFile.python
 src/.vscode
-src/_jquery-3.2.1.js
-src/_jquery.hotkeys.js
 
 src/anki
 src/aqt
-src/_jquery-3.2.1.min.js
-src/_Autolinker.min.js
