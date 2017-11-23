@@ -104,3 +104,5 @@ src/.vscode
 
 src/anki
 src/aqt
+.vscode/launch.json
+tempCodeRunnerFile.python

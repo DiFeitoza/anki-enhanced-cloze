@@ -1,5 +1,8 @@
 /* ------------ Font ------------ */
 
+
+/* TODO: change font here */
+
 @font-face {
     font-family: 'font-main';
     src: url('_方正兰亭黑.ttf');
@@ -24,12 +27,135 @@
 
 /* ------------Style------------- */
 
+#card-body {
+    font: 16px/1.5em 'font-main';
+    margin-top: 4.5em;
+    margin-bottom: 200px;
+}
+
+.content {
+    padding-left: 0.5em;
+    border-left: 4px solid transparent;
+}
+
+.header {
+    font: bold 16px/1.5em 'font-mono';
+    padding-left: 0.5em;
+}
+
+.mobile .header {
+    font: 'font-mono-mobile';
+}
+
+.header-red {
+    border-left: 4px solid #db4437;
+    color: #db4437;
+}
+
+.header-green {
+    border-left: 4px solid #0f9d58;
+    color: #0f9d58;
+}
+
+.header-blue {
+    border-left: 4px solid #4285f4;
+    color: #4285f4;
+}
+
+.header-yellow {
+    border-left: 4px solid #f4b400;
+    color: #f4b400;
+}
+
+.genuine-cloze {
+    border-bottom: 1px solid #db4437;
+    padding-bottom: 1px;
+}
+
+.genuine-cloze[show-state="hint"] {
+    border-bottom: 2px solid #db4437;
+    background-color: #ffd6d4;
+}
+
+.pseudo-cloze {
+    border-bottom: 1px solid #4285f4;
+    padding-bottom: 1px;
+}
+
+.pseudo-cloze[show-state="hint"] {
+    border-bottom: 2px solid #4285f4;
+    background-color: #dce8ff;
+}
+
+#topic-section {
+    width: 100%;
+    z-index: 9;
+    background-color: white;
+    position: fixed;
+    top: 0;
+}
+
+#info-section {
+    font-family: 'font-mono';
+}
+
+.mobile #info-section {
+    font-family: 'font-mono-mobile';
+}
+
+#note {
+    display: none;
+}
+
+#note-switch {
+    text-align: center;
+    font-size: 1.2em;
+    color: #db4437;
+    margin-bottom: 1em;
+}
+
+#show-one-cloze-left,
+#show-one-cloze-right,
+#no-more-cloze {
+    height: 100%;
+    width: 30px;
+    position: fixed;
+    z-index: 9;
+    top: 0;
+    background-color: transparent;
+}
+
+#show-one-cloze-left {
+    left: 0;
+}
+
+#show-one-cloze-right {
+    right: 0;
+}
+
+#no-more-cloze {
+    width: 10px;
+    background-color: #db4437;
+    left: 0;
+    display: none;
+}
+
+#show-all-pseudo-clozes {
+    height: 30px;
+    width: 100%;
+    position: fixed;
+    z-index: 9;
+    top: 0;
+    left: 0;
+    background-color: transparent;
+}
+
 i {
     padding-right: 0.5em;
 }
 
 u {
-    background-color: #ffeeee;
+    background-color: #dbffed;
     border-bottom: 2px solid #0f9d58;
     text-decoration: none;
 }
@@ -40,12 +166,12 @@ a {
 }
 
 .mobile ol,
-.mobile ul {
+.mobile ul,
+.mobile li {
     margin-left: -0.5em;
 }
 
 .mobile li {
-    margin-left: -0.5em;
     margin: 0.1em, inherit;
 }
 
@@ -66,24 +192,19 @@ th {
     padding: 0.2em 0.5em;
 }
 
-td:first-child,
-th:first-child {
-    border-left: none;
-}
-
-td:last-child,
-th:last-child {
-    border-right: none;
-}
-
 hr {
-    color: #db4437;
-    size: 5px;
+    border-top: 2px solid #aaaaaa;
+    width: 100%;
+    margin: 0;
+    padding: 0;
 }
+
+
+/* TODO: remove important on public version */
 
 pre {
     font-family: 'font-mono' !important;
-    border-left: 2px solid lightseagreen;
+    border-left: 2px solid #0f9d58;
     padding-left: 10px;
 }
 
@@ -97,7 +218,7 @@ var,
 samp,
 tt {
     font-family: 'font-mono' !important;
-    background-color: #e8f8ff;
+    background-color: #fdf3d6;
 }
 
 .mobile code,
@@ -106,164 +227,4 @@ tt {
 .mobile samp,
 .mobile tt {
     font-family: 'font-mono-mobile' !important;
-    ;
-}
-
-.header {
-    font: 16px/1.5em 'font-mono';
-    padding-left: 0.5em;
-}
-
-.mobile .header {
-    font: 16px/1.5em 'font-mono-mobile';
-}
-
-.content {
-    font: 16px/1.5em 'font-main';
-    padding-left: 0.5em;
-    border-left: 4px solid white;
-}
-
-.quote {
-    border-left: 2px solid gray;
-    padding-left: 10px;
-}
-
-.left-border-red {
-    border-left: 4px solid #db4437;
-}
-
-.left-border-green {
-    border-left: 4px solid #0f9d58;
-}
-
-.left-border-blue {
-    border-left: 4px solid #4285f4;
-}
-
-.left-border-yellow {
-    border-left: 4px solid #f4b400;
-}
-
-.text-color-red {
-    color: #db4437;
-}
-
-.text-color-green {
-    color: #0f9d58;
-}
-
-.text-color-blue {
-    color: #4285f4;
-}
-
-.text-color-yellow {
-    color: #f4b400;
-}
-
-#domain-and-topic-section {
-    font-family: 'font-mono';
-    font-weight: bold;
-    color: #db4437;
-    width: 100%;
-    z-index: 9999;
-    background-color: white;
-    position: fixed;
-    top: 0;
-}
-
-.mobile #domain-and-topic-section {
-    font-family: 'font-mono-mobile'
-}
-
-#card-body {
-    margin-top: 4.5em;
-}
-
-#show-one-cloze-left,
-#show-one-cloze-right,
-#no-more-cloze {
-    height: 100%;
-    width: 40px;
-    position: fixed;
-    z-index: 9999;
-    top: 0%;
-    background-color: transparent;
-}
-
-#show-one-cloze-left {
-    left: 0;
-}
-
-#show-one-cloze-right {
-    right: 0;
-}
-
-#no-more-cloze {
-    width: 10px;
-    background-color: #db4437;
-    left: 0;
-    display: none;
-}
-
-
-
-/* --------- Animation ---------- */
-
-.genuine-cloze {
-    border-bottom: 1px solid #db4437;
-    padding-bottom: 1px;
-    position: relative;
-    /* animation: cloze 0.5s 0s;
-    animation-fill-mode: forwards;
-    -webkit-animation: cloze 0.5s 0s;
-    -webkit-animation-fill-mode: forwards; */
-}
-
-.genuine-cloze[show-state="hint"] {
-    border-bottom: 2px solid #db4437;
-    background-color: #ffe1df;
-}
-
-.pseudo-cloze {
-    border-bottom: 1px solid #4285f4;
-    padding-bottom: 1px;
-    position: relative;
-    /* animation: cloze 0.5s 0s;
-    animation-fill-mode: forwards;
-    -webkit-animation: cloze 0.5s 0s;
-    -webkit-animation-fill-mode: forwards; */
-}
-
-.pseudo-cloze[show-state="hint"] {
-    border-bottom: 2px solid #4285f4;
-    background-color: #dce8ff;
-}
-
-.hidden-block {
-    border-bottom: 1px solid #f4b400;
-    padding-bottom: 1px;
-    position: relative;
-    /* animation: cloze 0.5s 0s;
-    animation-fill-mode: forwards;
-    -webkit-animation: cloze 0.5s 0s;
-    -webkit-animation-fill-mode: forwards; */
-}
-
-@keyframes cloze {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-@-webkit-keyframes cloze {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
 }

@@ -1,100 +1,99 @@
 <div id="card-body">
-    <div id="domain-and-topic-section" class="content">
+    <div id="topic-section" class="header header-red">
         {{#Domain}}
         <div id="domain">@ {{Domain}}</div>
         {{/Domain}}
 
-        <!-- 分割线 -->
+        <!-- Separation line -->
         {{#Topic}}
         <div id="topic"># {{Topic}}</div>
         {{/Topic}}
-
     </div>
 
     <div id="main-section" class="content">
-        <!-- 分割线 -->
+        <!-- Separation line -->
         {{cloze:Cloze99}}
-        <!-- 分割线 -->
+        <!-- Separation line -->
         {{cloze:Cloze1}}
-        <!-- 分割线 -->
+        <!-- Separation line -->
         {{cloze:Cloze2}}
-        <!-- 分割线 -->
+        <!-- Separation line -->
         {{cloze:Cloze3}}
-        <!-- 分割线 -->
+        <!-- Separation line -->
         {{cloze:Cloze4}}
-        <!-- 分割线 -->
+        <!-- Separation line -->
         {{cloze:Cloze5}}
-        <!-- 分割线 -->
+        <!-- Separation line -->
         {{cloze:Cloze6}}
-        <!-- 分割线 -->
+        <!-- Separation line -->
         {{cloze:Cloze7}}
-        <!-- 分割线 -->
+        <!-- Separation line -->
         {{cloze:Cloze8}}
-        <!-- 分割线 -->
+        <!-- Separation line -->
         {{cloze:Cloze9}}
-        <!-- 分割线 -->
+        <!-- Separation line -->
         {{cloze:Cloze10}}
-        <!-- 分割线 -->
+        <!-- Separation line -->
         {{cloze:Cloze11}}
-        <!-- 分割线 -->
+        <!-- Separation line -->
         {{cloze:Cloze12}}
-        <!-- 分割线 -->
+        <!-- Separation line -->
         {{cloze:Cloze13}}
-        <!-- 分割线 -->
+        <!-- Separation line -->
         {{cloze:Cloze14}}
-        <!-- 分割线 -->
+        <!-- Separation line -->
         {{cloze:Cloze15}}
-        <!-- 分割线 -->
+        <!-- Separation line -->
         {{cloze:Cloze16}}
-        <!-- 分割线 -->
+        <!-- Separation line -->
         {{cloze:Cloze17}}
-        <!-- 分割线 -->
+        <!-- Separation line -->
         {{cloze:Cloze18}}
-        <!-- 分割线 -->
+        <!-- Separation line -->
         {{cloze:Cloze19}}
-        <!-- 分割线 -->
+        <!-- Separation line -->
         {{cloze:Cloze20}}
     </div>
     <br>
 
     <div id="info-section">
-        <div id="info-header" class="header left-border-red text-color-red" onclick="showNextElement(this)">
-            <b>信息</b>
+        <div id="info-header" class="header header-blue" onclick="showNextElement(this)">
+            信息
         </div>
 
         <div id="info" class="content" style="display:none">
-            <div>牌组：
-                <b>{{Deck}}</b>
+            <div>
+                牌组: {{Deck}}
             </div>
 
-            <!-- 分割线 -->
+            <!-- Separation line -->
             {{#Project}}
-            <div>项目：
-                <b>{{Project}}</b>
+            <div>
+                项目: {{Project}}
             </div>
             {{/Project}}
 
-            <!-- 分割线  -->
+            <!-- Separation line -->
             {{#Tags}}
-            <div id="tags">标签：
-                <b>{{Tags}}</b>
+            <div id="tags">
+                标签: {{Tags}}
             </div>
             {{/Tags}}
 
-            <!-- 分割线  -->
+            <!-- Separation line -->
             {{#Subject}}
-            <div>主题：
-                <b>{{Subject}}</b>
+            <div>
+                主题: {{Subject}}
             </div>
             {{/Subject}}
         </div>
-        <br>
     </div>
+    <br>
 
-    <!-- 分割线  -->
+    <!-- Separation line -->
     {{#Source}}
     <div id="source-section">
-        <div id="source-header" class="header left-border-green text-color-green" onclick="showNextElement(this)">
+        <div id="source-header" class="header header-green" onclick="showNextElement(this)">
             来源
         </div>
         <div id="source" class="content" style="display:none">
@@ -103,10 +102,10 @@
     </div>
     <br> {{/Source}}
 
-    <!-- 分割线 -->
+    <!-- Separation line -->
     {{#Extra}}
     <div id="extra-section">
-        <div id="extra-header" class="header left-border-blue text-color-blue" onclick="showNextElement(this)">
+        <div id="extra-header" class="header header-yellow" onclick="showNextElement(this)">
             补充
         </div>
         <div id="extra" class="content" style="display:none">
@@ -115,9 +114,15 @@
     </div>
     <br> {{/Extra}}
 
-    <div id="show-one-cloze-left"></div>
-    <div id="show-one-cloze-right"></div>
-    <div id="no-more-cloze"></div>
+    <div id="functional-elements">
+        <div id="show-one-cloze-left"></div>
+        <div id="show-one-cloze-right"></div>
+        <div id="no-more-cloze"></div>
+        <div id="show-all-pseudo-clozes"></div>
+        <div style="display:none">
+            {{type:In-use Clozes}}
+        </div>
+    </div>
 </div>
 
 <script src="_jquery-3.2.1.min.js"></script>
@@ -130,101 +135,68 @@
     var genuineClozeTotalNumber = $('.genuine-cloze').length;
 
     $(function () {
-        // initialize genuine clozes
-        $('.genuine-cloze').each(function (index, elem) {
-            toggleCloze($(this), 'hint')
+        // INITIALIZE CLOZES
+        //      genuine clozes refer to those belong to current card and need to be answered, e.g. {{c2::abc}} on card2 
+        //      pseudo clozes refer to the opposite, e.g. {{c1::abc}} and {{c3::abc}} on card2 
+        $('.genuine-cloze, .pseudo-cloze').each(function (index, elem) {
+            toggleCloze(elem, 'hint')
         });
 
-        // initialize pseudo clozes
-        $('.pseudo-cloze').each(function (index, elem) {
-            toggleCloze($(this), 'hint')
-        });
-
-        // initialize hidden block
-        $('.hidden-block').each(function (index, elem) {
-            $(elem).html('&nbsp;&nbsp;[&nbsp;&nbsp;点击显示&nbsp;&nbsp;]&nbsp;&nbsp;')
-        })
-
-        // shorten tags
-        $('#tags kbd').each(function (index, elem) {
+        // SHORTEN TAGS
+        //      leaving only the last part if hierarchical tags are used, i.e. tag1::tag2::tag3 -> tag3
+        $('#tags').each(function (index, elem) {
             $(elem).text($(elem).text().replace(/[^:\s]+::/g, ''));
         });
 
-        var cardBodyElem = document.getElementById('card-body')
-        cardBodyElem.innerHTML = Autolinker.link(cardBodyElem.innerHTML, {
-            phone: false,
-            truncate: {
-                length: 100,
-                location: 'smart'
-            },
-            stripPrefix: false,
+        // GENERATE LINK
+        //      turn url-like plain text into clickable link
+        $('#card-body').html(function (index, oldhtml) {
+            return Autolinker.link(oldhtml, {
+                phone: false,
+                truncate: {
+                    length: 100,
+                    location: 'smart'
+                },
+                stripPrefix: false,
+            })
         });
 
-        scrollToFirstCloze();
+        // ADD SWITCH FOR HIDDEN NOTE 
+        if ($('#note').text().match(/\S/g)) {
+            $('#note').before('<div id="note-switch" onclick="showNextElement(this)">-- Click to show --</div>')
+        }
 
-        // setup key binding
+        // SCROLL TO FIRST CLOZE
+        scrollToCloze($('.genuine-cloze').first().get(0));
+
+        // SETUP KEY BINDING
         $(document).bind('keyup', 'i', function () {
             showOneCloze();
         })
 
-        // setup hidden block click event
-        $('.hidden-block').click(function () {
-            showHiddenBlock(this);
+        $(document).bind('keyup', ',', function () {
+            showAllPseudoClozes();
         })
 
-        // setup cloze click event
+        // SETUP CLOZE CLICK EVENT
         $('.genuine-cloze, .pseudo-cloze').click(function () {
-            toggleCloze($(this), 'toggle');
+            toggleCloze(this, 'toggle');
+        });
+
+        $('#show-one-cloze-left, #show-one-cloze-right').click(function () {
+            showOneCloze();
+        });
+
+        $('#show-all-pseudo-clozes').click(function () {
+            showAllPseudoClozes();
         })
 
-        $('#show-one-cloze-left,#show-one-cloze-right').click(function () {
-            showOneCloze();
-        })
     });
 
-    function scrollToFirstCloze() {
-        scrollToCloze($('.genuine-cloze').first(), true);
-    }
-
-    function scrollToCloze($elem, isFirst) {
-        if (isFirst) {
-            $('html, body').animate({
-                scrollTop: $elem.offset().top - 200
-            }, 100);
-        } else if (!$elem.visible()) {
-            $('html, body').animate({
-                scrollTop: $elem.offset().top - 200
-            }, 100);
-
-            // var windowScrollTop = $(window).scrollTop();
-            // var elemOffsetTop = $elem.offset().top;
-            // if ((elemOffsetTop - windowScrollTop) < 300) {
-            //     $('html, body').animate({
-            //         scrollTop: $(window).scrollTop - 300,
-            //     }, 100);
-            // }
-        }
-    }
-
-    function showHiddenBlock(elem) {
-        $(elem).html($('#hidden-block-' + $(elem).attr('index')).html());
-    }
-
-    function padHint(elem) {
-        var index = $(elem).attr('index');
-        var isGenuine = ($(elem).hasClass('genuine-cloze')) ? true : false;
-        var oriHint = '';
-        if (isGenuine) {
-            oriHint = $('#genuine-hint-' + index).html();
-        } else {
-            oriHint = $('#pseudo-hint-' + index).html();
-        }
-        if (oriHint == '') {
-            hint = '&nbsp;&nbsp;[&nbsp;&nbsp;&nbsp;&nbsp;]&nbsp;&nbsp;'
-        } else {
-            hint = '&nbsp;&nbsp;[&nbsp;&nbsp;' + oriHint + '&nbsp;&nbsp;]&nbsp;&nbsp;'
-        }
-        return hint;
+    function scrollToCloze(elem) {
+        $('html, body').animate({
+            scrollTop: $(elem).offset().top - 200
+        }, 100);
     }
 
     function showOneCloze() {
@@ -233,24 +205,40 @@
                 display: "toggle",
             }, 500);
         } else {
-            $('.genuine-cloze[index=' + (indexOfGenuineClozeToShow++) + ']').each(function (index, elem) {
-                toggleCloze(elem, 'answer');
-                scrollToCloze($(elem));
-                $(elem).css('display', 'none');
-                $(elem).show(500);
+            $('.genuine-cloze[index=' + indexOfGenuineClozeToShow + ']').each(function (index, elem) {
+                if ($(elem).parents('#note:hidden').length) {
+                    $("#note").show(0);
+                } else {
+                    toggleCloze(elem, 'answer');
+                    if (!$(elem).visible()) {
+                        scrollToCloze(elem);
+                    }
+                    $(elem).hide(0);
+                    $(elem).fadeIn(500);
+                    indexOfGenuineClozeToShow++;
+                }
             })
         }
     }
 
+    function showAllPseudoClozes() {
+        $('.pseudo-cloze').each(function (index, elem) {
+            toggleCloze(elem, 'answer');
+        })
+    }
+
     function toggleCloze(elem, displayOption) {
-        var answer, hint;
+        var answer = '',
+            hint = '';
+        var index = $(elem).attr('index');
         if ($(elem).hasClass('genuine-cloze')) {
-            answer = $('#genuine-answer-' + $(elem).attr('index')).html();
-            hint = padHint(elem);
+            answer = $('#genuine-cloze-answer-' + index).html();
+            hint = $('#genuine-cloze-hint-' + index).html();
         } else {
-            answer = $('#pseudo-answer-' + $(elem).attr('index')).html();
-            hint = padHint(elem);
+            answer = $('#pseudo-cloze-answer-' + index).html();
+            hint = $('#pseudo-cloze-hint-' + index).html();
         }
+        hint = '&nbsp;&nbsp;[&nbsp;&nbsp;' + hint + '&nbsp;&nbsp;]&nbsp;&nbsp;';
 
         if (displayOption == 'answer') {
             $(elem).attr('show-state', 'answer');
@@ -270,10 +258,6 @@
     }
 
     function showNextElement(elem) {
-        showElement($(elem).next());
-    };
-
-    function showElement(elem) {
-        $(elem).show();
+        $(elem).next().show(0);
     };
 </script>

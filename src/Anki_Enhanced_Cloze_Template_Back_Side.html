@@ -1,17 +1,12 @@
 {{FrontSide}}
 
 <script>
-    $(function(){
-        $('#info').show()
-        $('#source').show()
-        $('#extra').show()
-        $('.hidden-block').each(function(index, elem){
-            showHiddenBlock(elem);
-        })
-        $('.genuine-cloze').each(function(index,elem){
-            toggleCloze(elem, 'answer')
-        })
-        $('.pseudo-cloze').each(function(index, elem){
+    $(function () {
+        $('#note').show(0)
+        $('#info').show(0)
+        $('#source').show(0)
+        $('#extra').show(0)
+        $('.genuine-cloze').each(function (index, elem) {
             toggleCloze(elem, 'answer')
         })
     })
