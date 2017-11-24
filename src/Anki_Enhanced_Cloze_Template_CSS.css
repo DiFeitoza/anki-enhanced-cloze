@@ -1,27 +1,7 @@
-/* ------------ Font ------------ */
-
-
-/* @font-face {
-    font-family: 'font-main';
-    src: url('_Microsoft Yahei.ttf');
-    font-weight: normal;
-    font-style: normal;
-} */
-
-@font-face {
-    font-family: 'font-mono';
-    src: url('_SourceCodePro-Regular.ttf');
-    font-weight: normal;
-    font-style: normal;
-}
-
-
-/* ------------Style------------- */
-
 #card-body {
-    /* font: 16px/1.5em 'font-main'; */
-    font: 16px/1.5em Arial;
-    margin-top: 3em;
+    /* font: 17px/1.5em 'font-main'; */
+    font: 17px/1.5em 'Arial', 'Helvetica', 'sans-serif';
+    margin-top: 30px;
     margin-bottom: 200px;
 }
 
@@ -31,12 +11,8 @@
 }
 
 .header {
-    font: bold 16px/1.5em 'font-mono';
+    font: bold 17px/1.5em;
     padding-left: 0.5em;
-}
-
-.mobile .header {
-    font: 'font-mono-mobile';
 }
 
 .header-red {
@@ -77,29 +53,6 @@
 .pseudo-cloze[show-state="hint"] {
     border-bottom: 2px solid #4285f4;
     background-color: #dce8ff;
-}
-
-#topic-section {
-    width: 100%;
-    z-index: 9;
-    background-color: white;
-    position: fixed;
-    top: 0;
-}
-
-#info-section {
-    font-family: 'font-mono';
-}
-
-#note {
-    display: none;
-}
-
-#note-switch {
-    text-align: center;
-    font-size: 1.2em;
-    color: #db4437;
-    margin-bottom: 1em;
 }
 
 #show-one-cloze-left,
@@ -188,7 +141,6 @@ hr {
 }
 
 pre {
-    font-family: 'font-mono';
     border-left: 2px solid #0f9d58;
     padding-left: 10px;
 }
@@ -198,6 +150,5 @@ kbd,
 var,
 samp,
 tt {
-    font-family: 'font-mono';
     background-color: #fdf3d6;
 }

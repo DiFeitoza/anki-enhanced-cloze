@@ -20,9 +20,8 @@ pseudo_cloze_hint_array = []
 current_cloze_field_number = 0
 
 # constants
-MODEL_NAME = "0 Enhanced Cloze"
+MODEL_NAME = "Enhanced Cloze"
 CONTENT_FIELD_NAME = "# Content"
-NOTE_FIELD_NAME = "Note"
 IN_USE_CLOZES_FIELD_NAME = "In-use Clozes"
 UPDATE_ENHANCED_CLOZE_SHORTCUT = "Ctrl+Shift+C"
 
@@ -31,9 +30,6 @@ def generate_enhanced_cloze(note):
     # cloze_id means, eg. c1, cloze_number means, eg. 1
 
     src_content = note[CONTENT_FIELD_NAME]
-    if re.search(r"\S", note[NOTE_FIELD_NAME]) != None:
-        src_content += '<br><div id="note" class="content">' + \
-            note[NOTE_FIELD_NAME] + '</div>'
 
     # Get ids of in-use clozes
     cloze_start_regex = r"\{\{c\d+::"

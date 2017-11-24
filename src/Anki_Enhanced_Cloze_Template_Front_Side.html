@@ -1,10 +1,4 @@
 <div id="card-body">
-    <div id="topic-section" class="header header-red">
-        {{#Topic}}
-        <div id="topic"># {{Topic}}</div>
-        {{/Topic}}
-    </div>
-
     <div id="main-section" class="content">
         <!-- Separation line -->
         {{cloze:Cloze99}}
@@ -51,6 +45,18 @@
     </div>
     <br>
 
+    <!-- Separation line -->
+    {{#Note}}
+    <div id="note-section">
+        <div id="note-header" class="header header-red" onclick="showNextElement(this)">
+            Note
+        </div>
+        <div id="note" class="content" style="display:none">
+            {{Note}}
+        </div>
+    </div>
+    <br> {{/Note}}
+
     <div id="info-section">
         <div id="info-header" class="header header-blue" onclick="showNextElement(this)">
             Information
@@ -60,13 +66,6 @@
             <div>
                 Deck: {{Deck}}
             </div>
-
-            <!-- Separation line -->
-            {{#Project}}
-            <div>
-                Project: {{Project}}
-            </div>
-            {{/Project}}
 
             <!-- Separation line -->
             {{#Tags}}
@@ -115,7 +114,6 @@
 
 <script src="_jquery-3.2.1.min.js"></script>
 <script src="_jquery.hotkeys.js"></script>
-<script src="_Autolinker.min.js"></script>
 <script src="_jquery.visible.min.js"></script>
 
 <script>
@@ -135,24 +133,6 @@
         $('#tags').each(function (index, elem) {
             $(elem).text($(elem).text().replace(/[^:\s]+::/g, ''));
         });
-
-        // GENERATE LINK
-        //      turn url-like plain text into clickable link
-        $('#card-body').html(function (index, oldhtml) {
-            return Autolinker.link(oldhtml, {
-                phone: false,
-                truncate: {
-                    length: 100,
-                    location: 'smart'
-                },
-                stripPrefix: false,
-            })
-        });
-
-        // ADD SWITCH FOR HIDDEN NOTE 
-        if ($('#note').text().match(/\S/g)) {
-            $('#note').before('<div id="note-switch" onclick="showNextElement(this)">-- Click to show --</div>')
-        }
 
         // SCROLL TO FIRST CLOZE
         scrollToCloze($('.genuine-cloze').first().get(0));
@@ -183,7 +163,7 @@
 
     function scrollToCloze(elem) {
         $('html, body').animate({
-            scrollTop: $(elem).offset().top - 200
+            scrollTop: $(elem).offset().top - 30
         }, 100);
     }
 
