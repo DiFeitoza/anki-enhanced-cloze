@@ -116,7 +116,7 @@ def check_model(model):
 
 def process_cloze(matchObj):
 
-    cloze_string = str(matchObj.group())  # eg. {{c1::aa[::bbb]}}
+    cloze_string = matchObj.group()  # eg. {{c1::aa[::bbb]}}
     index_of_answer = cloze_string.find("::") + 2
     index_of_hint = cloze_string.rfind("::") + 2
     cloze_id = cloze_string[2: index_of_answer - 2]  # like: c1 or c11
