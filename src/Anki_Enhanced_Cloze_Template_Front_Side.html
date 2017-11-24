@@ -1,10 +1,5 @@
 <div id="card-body">
     <div id="topic-section" class="header header-red">
-        {{#Domain}}
-        <div id="domain">@ {{Domain}}</div>
-        {{/Domain}}
-
-        <!-- Separation line -->
         {{#Topic}}
         <div id="topic"># {{Topic}}</div>
         {{/Topic}}
@@ -58,34 +53,27 @@
 
     <div id="info-section">
         <div id="info-header" class="header header-blue" onclick="showNextElement(this)">
-            信息
+            Information
         </div>
 
         <div id="info" class="content" style="display:none">
             <div>
-                牌组: {{Deck}}
+                Deck: {{Deck}}
             </div>
 
             <!-- Separation line -->
             {{#Project}}
             <div>
-                项目: {{Project}}
+                Project: {{Project}}
             </div>
             {{/Project}}
 
             <!-- Separation line -->
             {{#Tags}}
             <div id="tags">
-                标签: {{Tags}}
+                Tags: {{Tags}}
             </div>
             {{/Tags}}
-
-            <!-- Separation line -->
-            {{#Subject}}
-            <div>
-                主题: {{Subject}}
-            </div>
-            {{/Subject}}
         </div>
     </div>
     <br>
@@ -94,7 +82,7 @@
     {{#Source}}
     <div id="source-section">
         <div id="source-header" class="header header-green" onclick="showNextElement(this)">
-            来源
+            Source
         </div>
         <div id="source" class="content" style="display:none">
             {{Source}}
@@ -106,7 +94,7 @@
     {{#Extra}}
     <div id="extra-section">
         <div id="extra-header" class="header header-yellow" onclick="showNextElement(this)">
-            补充
+            Extra
         </div>
         <div id="extra" class="content" style="display:none">
             {{Extra}}
