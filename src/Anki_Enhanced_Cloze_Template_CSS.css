@@ -1,8 +1,5 @@
 /* ------------ Font ------------ */
 
-
-/* TODO: change font here */
-
 @font-face {
     font-family: 'font-main';
     src: url('_方正兰亭黑.ttf');
@@ -30,7 +27,7 @@
 #card-body {
     font: 16px/1.5em 'font-main';
     margin-top: 4.5em;
-    margin-bottom: 200px;
+    margin-bottom: 100px;
 }
 
 .content {
@@ -198,9 +195,6 @@ hr {
     margin: 0;
     padding: 0;
 }
-
-
-/* TODO: remove important on public version */
 
 pre {
     font-family: 'font-mono' !important;

@@ -20,7 +20,7 @@ pseudo_cloze_hint_array = []
 current_cloze_field_number = 0
 
 # constants
-MODEL_NAME = "0 Enhanced Cloze"
+MODEL_NAME = "Enhanced Cloze"
 CONTENT_FIELD_NAME = "# Content"
 NOTE_FIELD_NAME = "Note"
 IN_USE_CLOZES_FIELD_NAME = "In-use Clozes"

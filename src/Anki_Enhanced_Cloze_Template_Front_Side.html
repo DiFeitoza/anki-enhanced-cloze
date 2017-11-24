@@ -150,7 +150,7 @@
 
         // GENERATE LINK
         //      turn url-like plain text into clickable link
-        $('#card-body').html(function (index, oldhtml) {
+        $('#source').html(function (index, oldhtml) {
             return Autolinker.link(oldhtml, {
                 phone: false,
                 truncate: {
@@ -195,8 +195,8 @@
 
     function scrollToCloze(elem) {
         $('html, body').animate({
-            scrollTop: $(elem).offset().top - 200
-        }, 100);
+            scrollTop: $(elem).offset().top - 100
+        }, 500);
     }
 
     function showOneCloze() {
