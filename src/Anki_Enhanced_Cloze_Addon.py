@@ -24,7 +24,7 @@ MODEL_NAME = "Enhanced Cloze"
 CONTENT_FIELD_NAME = "# Content"
 NOTE_FIELD_NAME = "Note"
 IN_USE_CLOZES_FIELD_NAME = "In-use Clozes"
-UPDATE_ENHANCED_CLOZE_SHORTCUT = "Ctrl+Shift+C"
+UPDATE_ENHANCED_CLOZE_SHORTCUT = "Ctrl+Alt+C"
 
 
 def generate_enhanced_cloze(note):
