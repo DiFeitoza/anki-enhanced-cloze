@@ -144,7 +144,7 @@
 
         // SHORTEN TAGS
         //      leaving only the last part if hierarchical tags are used, i.e. tag1::tag2::tag3 -> tag3
-        $('#tags').each(function (index, elem) {
+        $('#tags kbd').each(function (index, elem) {
             $(elem).text($(elem).text().replace(/[^:\s]+::/g, ''));
         });
 
